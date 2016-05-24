@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class UserInfoController{
     @RequestMapping(value = "/userJson", produces = { "text/html;charset=UTF-8" })
     @ResponseBody
     public String userJson(ModelMap modelMap,HttpServletRequest req,HttpSession session){
-        List<UserInfo> userInfos =   userInfoService.queryForList();
+
         String page = req.getParameter("page") == null ? "" : req
                 .getParameter("page");
         String rows = req.getParameter("rows") == null ? "" : req
@@ -88,9 +89,12 @@ public class UserInfoController{
         Map<String, String> query = new HashMap<String, String>();
         query.put("page", page);
         query.put("rows", rows);
+
         PageBean pageBean = userInfoService.list(query);
+
         Gson gson = new Gson();
         String json =  gson.toJson(pageBean);
+//        String json =  "{\"total\":15681,\"totalPages\":1569,\"pageSize\":10,\"currentPageNo\":1,\"previousPageNo\":1,\"nextPageNo\":2,\"isFirstPage\":true,\"isLastPage\":false,\"hasPreviousPage\":false,\"hasNextPage\":true,\"rows\":[{\"id\":23,\"uname\":\"李四士大夫\",\"unumber\":52},{\"id\":26,\"uname\":\"张三\",\"unumber\":88},{\"id\":27,\"uname\":\"张三\",\"unumber\":88},{\"id\":28,\"uname\":\"张三\",\"unumber\":88},{\"id\":29,\"uname\":\"张三\",\"unumber\":88},{\"id\":30,\"uname\":\"张三\",\"unumber\":88},{\"id\":31,\"uname\":\"张三\",\"unumber\":88},{\"id\":32,\"uname\":\"张三\",\"unumber\":88},{\"id\":39,\"uname\":\"张三\",\"unumber\":88},{\"id\":40,\"uname\":\"张三\",\"unumber\":88}]}";
         logger.info("json=========="+json);
         return json;
     }

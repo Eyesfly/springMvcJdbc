@@ -25,7 +25,7 @@ public class UserInfoService implements IUserInfoService {
         userInfoDao.saveOrUpdate(userInfo);
 /*        throw new RecoverableDataAccessException("TEST");*/
     }
-
+    @CacheEvict(value = { "usercache"}, allEntries = true)
     public int delete(UserInfo userInfo) {
         return userInfoDao.delete(userInfo);
     }
@@ -33,8 +33,9 @@ public class UserInfoService implements IUserInfoService {
     public UserInfo queryForUserInfo(UserInfo userInfo) {
         return userInfoDao.queryForUserInfo(userInfo);
     }
-
+    @Cacheable(value = "usercache",keyGenerator = "wiselyKeyGenerator")
     public List<UserInfo> queryForList() {
+        System.out.println("无缓存的时候调用这里");
         return userInfoDao.queryForList();
     }
 
