@@ -132,7 +132,7 @@
         <shiro:hasRole name="ROLE_MANAGER">manager</shiro:hasRole>
         <shiro:hasRole name="ROLE_USER">user</shiro:hasRole>
         <a onclick="mainAddTab('查看用户列表','<%=request.getContextPath()%>/user/list.ht');" href="#">查看用户列表</a>
-        <a href="<%=request.getContextPath()%>/logout.ht">退出</a>
+        <a href="<%=request.getContextPath()%>/login/logout.ht">退出</a>
     </div>
     <div data-options="region:'south',split:true" style="height:50px;"></div>
     <div data-options="region:'west',split:true" title="" style="width:100px;">

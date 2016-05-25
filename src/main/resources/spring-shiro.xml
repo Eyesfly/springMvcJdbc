@@ -63,7 +63,7 @@
         <!-- 安全管理器 -->
         <property name="securityManager" ref="securityManager" />
         <!-- 默认的登陆访问url -->
-        <property name="loginUrl" value="/login.jsp" />
+        <property name="loginUrl" value="/login/login.ht" />
         <!-- 登陆成功后跳转的url -->
         <property name="successUrl" value="/" />
         <!-- 没有权限跳转的url -->
@@ -76,7 +76,6 @@
                 /css/** = anon
                 /images/** = anon
                 /unauth.jsp = anon
-                /register.ht = anon
                 /register.jsp = anon
                 /login/** = anon
                 /login** = anon

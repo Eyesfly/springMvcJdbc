@@ -77,6 +77,20 @@
     <url-pattern>*.ht</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>Kaptcha</servlet-name>
+    <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Kaptcha</servlet-name>
+    <url-pattern>/kaptcha</url-pattern>
+  </servlet-mapping>
+
+
+
+
 
   <error-page>
     <error-code>404</error-code>
