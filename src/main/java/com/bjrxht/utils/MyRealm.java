@@ -11,6 +11,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -39,20 +40,17 @@ public class MyRealm extends JdbcRealm {
             e.printStackTrace();
         }
 
-        AuthenticationInfo authenticationInfo = null;
+        SimpleAuthenticationInfo  authenticationInfo = null;
 
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }
-
+/*
         String password = new String(usernamePasswordToken.getPassword());
-        if (password.equals(user.getPassword())) {
-            if(Boolean.TRUE.equals(user.isLocked())) {
-                throw new LockedAccountException(); //帐号锁定
-            }
+        boolean flag = EndecryptUtils.checkMd5Password(username,password,user.getSalt(),user.getPassword());
+*/
             authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
-        }
-
+            authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(username+user.getSalt()));
         return authenticationInfo;
     }
 

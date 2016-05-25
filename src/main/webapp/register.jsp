@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>登录</title>
+    <title>用户注册</title>
     <script type="text/javascript">
 
         var error = "${param.error}";
@@ -18,13 +18,11 @@
     </script>
 </head>
 <body>
-<h3>用户登录</h3>
-<form id="login" action="<%=request.getContextPath()%>/login.ht" method="post">
+<h3>用户注册</h3>
+<form id="login" action="<%=request.getContextPath()%>/register.ht" method="post">
     <input name="username" type="text" value=""/>
     <input name="password" type="password" value=""/>
-    <input name="rememberMe" type="checkbox">
-    <input type="submit" value="保存"/>
-    <input type="button" value="注册" onclick="location.href='register.jsp'"/>
+    <input type="submit" value="注册"/>
 </form>
 </body>
 </html>

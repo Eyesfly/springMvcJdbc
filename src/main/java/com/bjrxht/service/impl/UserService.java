@@ -17,8 +17,8 @@ public class UserService implements IUserService{
 @Autowired
 private UserDao userDao;
 
-    public User createUser(User user) {
-        return null;
+    public int saveOrUpdate(User user) {
+        return userDao.saveOrUpdate(user);
     }
 
     public void changePassword(Long userId, String newPassword) {

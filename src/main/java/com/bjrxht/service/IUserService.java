@@ -10,7 +10,7 @@ import java.util.Set;
  * Created by Administrator on 2016/3/29.
  */
 public interface IUserService {
-     User createUser(User user); //创建账户
+     int saveOrUpdate(User user); //创建账户
      void changePassword(Long userId, String newPassword);//修改密码
      void correlationRoles(Long userId, Long... roleIds); //添加用户-角色关系
      void uncorrelationRoles(Long userId, Long... roleIds);// 移除用户-角色关系

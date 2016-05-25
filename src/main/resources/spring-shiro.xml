@@ -15,7 +15,16 @@
     </bean>
 
 
-    <bean id="shiroDbRealm" class="com.bjrxht.utils.MyRealm"/>
+<!--   配置认证的数据源使用的密码校验接口  -->
+    <bean id="shiroDbRealm" class="com.bjrxht.utils.MyRealm">
+        <property name="credentialsMatcher" ref="passwordMatcher"></property>
+    </bean>
+    <bean id="passwordMatcher" class="com.bjrxht.utils.LimitRetryHashedMatcher">
+        <property name="hashAlgorithmName" value="md5"></property>
+        <property name="hashIterations" value="2"></property>
+        <property name="storedCredentialsHexEncoded" value="true"></property>
+    </bean>
+
 
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
@@ -56,9 +65,7 @@
         <!-- 默认的登陆访问url -->
         <property name="loginUrl" value="/login.jsp" />
         <!-- 登陆成功后跳转的url -->
-<!--
-        <property name="successUrl" value="/index.jsp" />
--->
+        <property name="successUrl" value="/" />
         <!-- 没有权限跳转的url -->
         <property name="unauthorizedUrl" value="/unauth.jsp" />
 
@@ -69,6 +76,8 @@
                 /css/** = anon
                 /images/** = anon
                 /unauth.jsp = anon
+                /register.ht = anon
+                /register.jsp = anon
                 /login/** = anon
                 /login** = anon
                 /** = authc

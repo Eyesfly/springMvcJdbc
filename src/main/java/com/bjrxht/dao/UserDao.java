@@ -6,9 +6,13 @@ import com.bjrxht.entity.UserInfo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -65,6 +69,7 @@ public class UserDao {
                         user.setId(rs.getInt("id"));
                         user.setUsername(rs.getString("username"));
                         user.setPassword(rs.getString("password"));
+                        user.setSalt(rs.getString("salt"));
                         return user;
                     }
                 }
@@ -74,4 +79,38 @@ public class UserDao {
         }
         return user;
     }
+
+
+
+    /***
+     * 新增或修改对象
+     * @param user
+     */
+    public int saveOrUpdate(final User user) {
+        if(user!=null && user.getId() > 0){
+          return   jdbcTemplate.update(
+                    "update SYS_USER set username=?,password=?,salt=? where id = ?",
+                    new PreparedStatementSetter(){
+                        public void setValues(PreparedStatement ps) throws SQLException {
+                            ps.setString(1, user.getUsername());
+                            ps.setString(2, user.getPassword());
+                            ps.setString(3, user.getSalt());
+                            ps.setInt(4, user.getId());
+                        }
+                    }
+            );
+        }else{
+           return jdbcTemplate.update(new PreparedStatementCreator() {
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    PreparedStatement ps = connection.prepareStatement("insert into SYS_USER(id,username,password,salt) values(seq_test.nextval,?,?,?)");
+                    ps.setString(1, user.getUsername());
+                    ps.setString(2, user.getPassword());
+                    ps.setString(3, user.getSalt());
+                    return ps;
+                }
+            });
+
+        }
+    }
+
 }

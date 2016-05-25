@@ -9,6 +9,16 @@ public class User {
     private int id;
     private String username;
     private String password;
+    private String salt;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     private boolean locked;
 
     private Set<Role> roles;
